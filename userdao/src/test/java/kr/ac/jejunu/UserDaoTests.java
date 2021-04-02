@@ -9,11 +9,12 @@ import java.sql.SQLException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 public class UserDaoTests {
     static UserDao userDao; // jvm의 메모리 구조, 메모리 영역이 어떻게 관리되는지? 무엇이 어느 영역에서 사용되는지?
-    //gitignore test
+
     @BeforeAll
     public  static void  setup(){
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -43,9 +44,6 @@ public class UserDaoTests {
         user.setName(name);
         user.setPassword(password);
 
-//        DaoFactory daoFactory = new DaoFactory();
-//        UserDao userDao = daoFactory.getUserDao();
-
         userDao.insert(user);
 
         User insertedUser = userDao.findById(user.getId());
@@ -54,6 +52,43 @@ public class UserDaoTests {
         assertThat(user.getId(), is (user.getId()));
         assertThat(insertedUser.getName(), is(user.getName()));
         assertThat(insertedUser.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public  void  update() throws SQLException {
+
+        String name = "Hyun";
+        String password = "1234";
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        userDao.insert(user);
+
+        user.setName("kim");
+        user.setPassword("1212");
+
+        userDao.update(user);
+
+        User udatedUser = userDao.findById(user.getId());
+
+        assertThat(udatedUser.getId(), is(user.getId()));
+        assertThat(udatedUser.getName(), is(user.getName()));
+        assertThat(udatedUser.getPassword(), is(user.getPassword()));
+    }
+
+    public  void  delete() throws SQLException {
+        String name = "Hyun";
+        String password = "1234";
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        userDao.insert(user);
+
+        userDao.delete(user.getId());
+
+        User deletedUser = userDao.findById(user.getId());
+
+        assertThat(deletedUser, nullValue());
     }
 //
 //    @Test
@@ -87,9 +122,5 @@ public class UserDaoTests {
 //        assertThat(insertedUser.getName(), is(user.getName()));
 //        assertThat(insertedUser.getPassword(), is(user.getPassword()));
 //    }
-//
-
-
-
 }
 
