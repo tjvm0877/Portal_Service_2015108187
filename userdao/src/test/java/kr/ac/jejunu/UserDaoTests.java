@@ -1,6 +1,9 @@
 package kr.ac.jejunu;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
 
@@ -9,14 +12,23 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
 public class UserDaoTests {
+    static UserDao userDao; // jvm의 메모리 구조, 메모리 영역이 어떻게 관리되는지? 무엇이 어느 영역에서 사용되는지?
+
+    @BeforeAll
+    public  static void  setup(){
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
+
+        userDao = applicationContext.getBean("userDao", UserDao.class); // Dependency LookUP
+    }
+
     @Test
     public void get() throws SQLException, ClassNotFoundException {
         Integer id = 1;
-        String name = "재";
+        String name = "재현";
         String password = "1234";
 
-        DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
+//        DaoFactory daoFactory = new DaoFactory();
+//        UserDao userDao = daoFactory.getUserDao();
 
         User user = userDao.findById(id);
         assertThat(user.getId(), is(id));
@@ -32,8 +44,8 @@ public class UserDaoTests {
         user.setName(name);
         user.setPassword(password);
 
-        DaoFactory daoFactory = new DaoFactory();
-        UserDao userDao = daoFactory.getUserDao();
+//        DaoFactory daoFactory = new DaoFactory();
+//        UserDao userDao = daoFactory.getUserDao();
 
         userDao.insert(user);
 
