@@ -1,5 +1,6 @@
 package kr.ac.jejunu;
 
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 public class UserDaoTests {
@@ -24,11 +26,9 @@ public class UserDaoTests {
     @Test
     public void get() throws SQLException, ClassNotFoundException {
         Integer id = 1;
-        String name = "hynn";
+        String name = "hyun";
         String password = "1234";
 
-//        DaoFactory daoFactory = new DaoFactory();
-//        UserDao userDao = daoFactory.getUserDao();
         User user = userDao.findById(id);
         assertThat(user.getId(), is(id));
         assertThat(user.getName(), is(name));
@@ -36,7 +36,7 @@ public class UserDaoTests {
     }
 
     @Test
-    public void insert() throws SQLException, ClassNotFoundException {
+    public void insert() throws SQLException {
         String name = "hyun";
         String password = "1234";
 
@@ -53,6 +53,44 @@ public class UserDaoTests {
         assertThat(insertedUser.getId(), is(user.getId()));
         assertThat(insertedUser.getName(), is(user.getName()));
         assertThat(insertedUser.getPassword(), is(user.getPassword()));
+    }
 
+    @Test
+    public void update() throws SQLException {
+        String name = "재현";
+        String password = "1111";
+
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        userDao.insert(user);
+
+        user.setName("hyun");
+        user.setPassword("1234");
+
+        userDao.update(user);
+
+        User updatedUser = userDao.findById(user.getId());
+
+        assertThat(updatedUser.getId(), is(user.getId()));
+        assertThat(updatedUser.getName(), is(user.getName()));
+        assertThat(updatedUser.getPassword(), is(user.getPassword()));
+    }
+
+    @Test
+    public void delete() throws SQLException {
+        String name = "hyun";
+        String password = "1234";
+
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
+        userDao.insert(user);
+
+        userDao.delete(user.getId());
+
+        User deletedUser = userDao.findById(user.getId());
+
+        assertThat(deletedUser, nullValue());
     }
 }
