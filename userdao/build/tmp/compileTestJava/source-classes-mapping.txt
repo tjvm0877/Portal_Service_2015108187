@@ -1,2 +1,0 @@
-kr/ac/jejunu/UserDaoTests.java
- kr.ac.jejunu.UserDaoTests
