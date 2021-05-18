@@ -1,4 +1,4 @@
-package kr.ac.jejunu;
+package kr.ac.jejunu.user;
 
 public class User {
     private Integer id;

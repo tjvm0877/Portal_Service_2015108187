@@ -1,6 +1,5 @@
-package kr.ac.jejunu;
+package kr.ac.jejunu.user;
 
-import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;

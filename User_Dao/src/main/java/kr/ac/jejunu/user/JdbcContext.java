@@ -1,4 +1,4 @@
-package kr.ac.jejunu;
+package kr.ac.jejunu.user;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -95,5 +95,39 @@ public class JdbcContext {
                 throwables.printStackTrace();
             }
         }
+    }
+
+    User findById(String sql, Object[] prams) throws SQLException {
+        StatementStrategy statementStrategy = connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            for(int i = 0; i< prams.length; i++) {
+                preparedStatement.setObject(i + 1, prams[i]);
+            }
+            return preparedStatement;
+        };
+        return jdbcContextForFindById(statementStrategy);
+    }
+
+    void insert(User user, Object[] prams, String sql) throws SQLException {
+        StatementStrategy statementStrategy = connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS
+            );
+            for(int i = 0; i< prams.length; i++) {
+                preparedStatement.setObject(i + 1, prams[i]);
+            }
+            return preparedStatement;
+        };
+        jdbcContextForInsert(user, statementStrategy);
+    }
+
+    void update(String sql, Object[] prams) throws SQLException {
+        StatementStrategy statementStrategy = connection -> {
+            PreparedStatement preparedStatement = connection .prepareStatement(sql);
+            for(int i = 0; i<prams.length; i++) {
+                preparedStatement.setObject(i + 1, prams[i]);
+            }
+            return preparedStatement;
+        };
+        jdbcContextForUpdate(statementStrategy);
     }
 }
