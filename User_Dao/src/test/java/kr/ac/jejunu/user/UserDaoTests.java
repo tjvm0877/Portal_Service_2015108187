@@ -24,8 +24,7 @@ public class UserDaoTests {
     @BeforeAll
     public static void setup() throws ClassNotFoundException {
 //        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
-
-
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext("kr.ac.jejunu.user");
         // static applicationContext
 //        StaticApplicationContext applicationContext = new StaticApplicationContext();
 //        BeanDefinition dataSourceBeanDefinition = new RootBeanDefinition(SimpleDriverDataSource.class);
@@ -45,8 +44,8 @@ public class UserDaoTests {
 
         // xml기반 bean관라
 //        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("daoFactory.xml");
-
-        ApplicationContext applicationContext = new GenericGroovyApplicationContext("daoFactory.groovy");
+        // groovy기반 bean관리
+//        ApplicationContext applicationContext = new GenericGroovyApplicationContext("daoFactory.groovy");
         userDao = applicationContext.getBean("userDao", UserDao.class);
     }
 
