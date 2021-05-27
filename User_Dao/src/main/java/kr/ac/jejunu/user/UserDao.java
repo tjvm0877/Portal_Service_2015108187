@@ -18,7 +18,7 @@ public class UserDao {
 //        this.jdbcTemplate = jdbcTemplate;
 //    }
 
-    public User findById(Integer id) throws SQLException {
+    public User findById(Integer id) {
         Object[] prams = new Object[] {id};
         String sql = "select * from  userinfo where id = ?";
         return jdbcTemplate.query(sql, prams, rs -> {
@@ -33,7 +33,7 @@ public class UserDao {
         });
     }
 
-    public void insert(User user) throws SQLException {
+    public void insert(User user) {
         Object[] prams = new Object[] {user.getName(), user.getPassword()};
         String sql = "insert into userinfo (name, password) values ( ?, ? )";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -48,13 +48,13 @@ public class UserDao {
         user.setId(keyHolder.getKey().intValue());
     }
 
-    public void update(User user) throws SQLException {
+    public void update(User user) {
         Object[] prams = new Object[] {user.getName(), user.getPassword(), user.getId()};
         String sql = "update userinfo set name = ?, password = ? where id = ?";
         jdbcTemplate.update(sql, prams);
     }
 
-    public void delete(Integer id) throws SQLException {
+    public void delete(Integer id) {
         Object[] prams = new Object[] {id};
         String sql = "delete from userinfo where id = ?";
         jdbcTemplate.update(sql, prams);
