@@ -7,9 +7,7 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.BeanDefinitionDsl;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.context.support.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
@@ -26,7 +24,9 @@ public class UserDaoTests {
     @BeforeAll
     public static void setup() throws ClassNotFoundException {
 //        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactory.class);
-        
+
+
+        // static applicationContext
 //        StaticApplicationContext applicationContext = new StaticApplicationContext();
 //        BeanDefinition dataSourceBeanDefinition = new RootBeanDefinition(SimpleDriverDataSource.class);
 //        dataSourceBeanDefinition.getPropertyValues().addPropertyValue("driverClass", Class.forName(System.getenv("DB_CLASSNAME")));
@@ -42,7 +42,11 @@ public class UserDaoTests {
 //        BeanDefinition beanDefinition = new RootBeanDefinition(UserDao.class);
 //        beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(new RuntimeBeanReference("jdbcContext"));
 //        applicationContext.registerBeanDefinition("userDao", beanDefinition);
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("daoFactory.xml");
+
+        // xml기반 bean관라
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("daoFactory.xml");
+
+        ApplicationContext applicationContext = new GenericGroovyApplicationContext("daoFactory.groovy");
         userDao = applicationContext.getBean("userDao", UserDao.class);
     }
 
