@@ -1,6 +1,8 @@
 package kr.ac.jejunu.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
