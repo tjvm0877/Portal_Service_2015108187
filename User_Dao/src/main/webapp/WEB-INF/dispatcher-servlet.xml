@@ -4,11 +4,11 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
              xsi:schemaLocation="
-       http://www.springframework.org/schema/mvc http://springframework.org/schema/mav/spring-mvc.xsd
+       http://www.springframework.org/schema/mvc http://springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="kr.ac.jejunu.user"/>
-
+    <annotation-driven />
     <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <beans:property name="defaultViews">
             <beans:list>
@@ -23,6 +23,7 @@
             </beans:bean>
         </beans:property>
     </beans:bean>
+    <resources mapping="/images/**" location="/WEB-INF/static/" />
 </beans:beans>
 
 <!--    <beans:bean name="/simple/user" class="kr.ac.jejunu.user.SimpleController">-->
