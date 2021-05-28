@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <h3>
-    this is user.jsp
+    this is getuser.jsp
 </h3>
 <h1>
     Hello ${user.name}!!!
