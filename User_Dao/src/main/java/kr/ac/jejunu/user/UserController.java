@@ -20,6 +20,7 @@ public class UserController {
 
     @RequestMapping("/user")
     public User getUser(@RequestParam("id") Integer id) {
+        System.out.println("******** User *********");
         return userDao.findById(id);
     }
 
